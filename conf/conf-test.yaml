@@ -1,0 +1,9 @@
+env: test
+
+sys:
+  port: 8888
+
+database:
+  mysqlConn: root:mysql123@tcp(127.0.0.1:3306)/dbdoc?timeout=3s&parseTime=true&loc=Local&charset=utf8mb4
+  mysqlMaxActive: 500
+  mysqlMaxIdle: 20

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+
+<body>
+    <div id="app" class="wraper">
+        <template>
+            <el-backtop target=".wraper">
+                <div class="back-ball">
+                    回到顶部
+                </div>
+            </el-backtop>
+        </template>
+
+        <el-container>
+            <el-header>
+                <span class="title">实时库数据字典</span>
+            </el-header>
+            <el-container>
+
+                <el-aside width="200px">
+                    <el-menu default-active="item-0" class="el-menu-vertical-demo">
+                        <el-menu-item-group>
+                            <el-menu-item :index="'item-'+index" v-for="(table,index) in tables">
+                                <span @click="tableDetail(table)">{{ table }}</span>
+                            </el-menu-item>
+                        </el-menu-item-group>
+                    </el-menu>
+                </el-aside>
+                <el-main>
+                   <h3 style="line-height:10px">当前正在查看：{{currentTable}}</h3>
+                    <el-table :data="tableFields" border stripe class="el-table__header"
+                        style="width: 100%;line-height:10px">
+                        <el-table-column fixed prop="field" label="字段名称" width="120">
+                        </el-table-column>
+                        <el-table-column fixed prop="type" label="数据类型" width="150">
+                        </el-table-column>
+                        <el-table-column prop="collation" label="编码类型" width="160">
+                        </el-table-column>
+                        <el-table-column prop="null" label="是否为空" width="100">
+                        </el-table-column>
+                        <el-table-column prop="key" label="键" width="80">
+                        </el-table-column>
+                        <el-table-column prop="default" label="默认值" width="180">
+                        </el-table-column>
+                        <el-table-column prop="extra" label="扩展信息" width="180">
+                        </el-table-column>
+                        <el-table-column prop="privileges" label="权限" width="250">
+                        </el-table-column>
+                        <el-table-column fixed="right" prop="comment" label="注释" width="200">
+                        </el-table-column>
+                    </el-table>
+
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return { tables: [], tableFields: [],currentTable:"" }
+        },
+        created() {
+            var that = this;
+            axios.get('/api/v1/table/list')
+                .then(function (response) {
+                    that.tables = response.data.tables
+                    that.tableDetail(response.data.tables[0])
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .then(function () {
+                });
+        },
+
+        mounted() {
+
+        },
+        methods: {
+
+            tableDetail: function (table_name) {
+                var that = this;
+                this.currentTable = table_name
+                console.log(table_name)
+                axios.get('/api/v1/table/detail?table_name=' + table_name)
+                    .then(function (response) {
+                        console.log(response.data.tableFields);
+                        that.tableFields = response.data.tableFields
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                    .then(function () {
+                    });
+            }
+        }
+    })
+</script>
+<style>
+    .el-header,
+    .el-footer {
+        color: #333;
+        text-align: center;
+        line-height: 60px;
+    }
+
+    .el-aside {
+        color: #555;
+        /* border-right: 1px dashed #999;
+        border-top: 1px dashed #999; */
+    }
+
+    .tableNames {
+        list-style-type: none;
+
+        padding: 20px;
+    }
+
+    .el-main {
+        color: #555;
+        text-align: center;
+        line-height: 160px;
+    }
+
+    .wraper {
+        height: 100vh;
+        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    .back-ball {
+        background-color: tomato;
+        color: #fff;
+        border-radius: 22px;
+        padding: 10px;
+    }
+    .title{
+        font-size:22px;
+    }
+
+    body>.el-container {
+        margin-bottom: 40px;
+    }
+</style>
+
+</html>

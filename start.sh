@@ -1,0 +1,2 @@
+#!/bin/bash
+go run -ldflags "-X dbdoc/conf.Version=`git rev-parse HEAD` -X 'dbdoc/conf.BulidTime=`date  '+%Y-%m-%d_%k:%M:%S'`' -X 'dbdoc/conf.GoVersion=`go version`' -X 'dbdoc/conf.Creater=`whoami`'" app/main.go dev
