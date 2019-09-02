@@ -52,9 +52,9 @@ comment '书籍信息';
 
 修改配置文件，conf目录下的三个配置文件，主要用于不同环境使用
 
-conf-dev.yaml     ——— 本地开发环境
-conf-prod.yaml   ———  线上环境
-conf-test.yaml     ——— 测试环境
+> conf-dev.yaml     ——— 本地开发环境
+> conf-prod.yaml   ———  线上环境
+> conf-test.yaml     ——— 测试环境
 
 ```yaml
 env: test  // 环境信息
@@ -75,6 +75,10 @@ go run app/main.go dev
 ```
 
 上面命令会自动启动浏览器访问 http://127.0.0.1:8888/web/
+
+如图所示
+
+![页面截图](https://github.com/akkagao/dbdoc/blob/master/web/img/dbdoc.png?raw=true)
 
 ## 后续工作计划
 
