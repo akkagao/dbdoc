@@ -168,7 +168,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/dao/tableDao.go</url>
+          <url>file://$PROJECT_DIR$/../dbdoc/dao/tableDao.go</url>
           <line>58</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
